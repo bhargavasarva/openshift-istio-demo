@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config-service
+data:
+  application.properties: |-
+    welcome.message=Welcome message from application properties updated
+

@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: movie-rating-info-version2
+  labels:
+    app: movie-rating-info
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: movie-rating-info
+  template:
+    metadata:
+      labels:
+        app: movie-rating-info
+        version: v2
+    spec:
+      containers:
+        - name: movie-rating-info
+          image: bhargavasarva/movie-rating-info:v12_200
+          ports:
+          - containerPort: 8091

@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: movie-rating-app
+  labels:
+    app: movie-rating-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: movie-rating-app
+  template:
+    metadata:
+      labels:
+        app: movie-rating-app
+    spec:
+      containers:
+        - name: movie-rating-app
+          image: bhargavasarva/movie-rating-app:v12_200
+          ports:
+          - containerPort: 8092
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: movie-rating-app
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 8092
+      name: http
+  selector:
+    app: movie-rating-app
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: movie-rating-info
+  labels:
+    app: movie-rating-info
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: movie-rating-info
+  template:
+    metadata:
+      labels:
+        app: movie-rating-info
+        version: v1
+    spec:
+      containers:
+        - name: movie-rating-info
+          image: bhargavasarva/movie-rating-info:v12_200
+          ports:
+          - containerPort: 8091
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: movie-rating-info
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 8091
+      name: http
+  selector:
+    app: movie-rating-info
+

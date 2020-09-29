@@ -1,0 +1,15 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: movie-rating-info
+spec:
+  hosts:
+  - movie-rating-info
+  http:
+  - route:
+    - destination:
+        host: movie-rating-info
+        subset: version-v1
+    mirror:
+      host: movie-rating-info
+      subset: version-v2
